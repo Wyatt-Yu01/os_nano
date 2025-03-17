@@ -178,6 +178,7 @@ struct rt_thread main_thread;
  */
 void main_thread_entry(void *parameter)
 {
+    (void)parameter;
     extern int main(void);
 
 #ifdef RT_USING_COMPONENTS_INIT
