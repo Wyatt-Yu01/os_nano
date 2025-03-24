@@ -640,11 +640,14 @@ RTM_EXPORT(rt_strdup);
  */
 void rt_show_version(void)
 {
-    rt_kprintf("\n \\ | /\n");
-    rt_kprintf("- RT -     Thread Operating System\n");
-    rt_kprintf(" / | \\     %d.%d.%d build %s %s\n",
-               RT_VERSION, RT_SUBVERSION, RT_REVISION, __DATE__, __TIME__);
-    rt_kprintf(" 2006 - 2022 Copyright by RT-Thread team\n");
+    rt_kprintf("\033[2J\033[0;0H"); //clear screen
+    rt_kprintf("__          ____     __     _______  _______ \n");
+    rt_kprintf("\\ \\        / /\\ \\   / / /\\ |__   __||__   __|\n");
+    rt_kprintf(" \\ \\  /\\  / /  \\ \\_/ / /  \\   | |      | |\n");
+    rt_kprintf("  \\ \\/  \\/ /    \\   / / /\\ \\  | |      | |\n");
+    rt_kprintf("   \\  /\\  /      | | / ____ \\ | |      | |\n");
+    rt_kprintf("    \\/  \\/       |_|/_/    \\_\\|_|      |_|\n");
+    rt_kprintf("\t\t%s %s\n\n", __DATE__, __TIME__);
 }
 RTM_EXPORT(rt_show_version);
 
