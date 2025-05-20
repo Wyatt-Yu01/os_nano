@@ -121,7 +121,7 @@
 // <o>the buffer size of console <1-1024>
 //  <i>the buffer size of console
 //  <i>Default: 128  (128Byte)
-#define RT_CONSOLEBUF_SIZE          512
+#define RT_CONSOLEBUF_SIZE          128
 // </h>
 
 // <h>FinSH Configuration
