@@ -309,6 +309,8 @@ rt_inline int rt_slist_isempty(rt_slist_t *l)
     rt_slist_entry(rt_slist_tail(ptr), type, member)
 
 /**@}*/
+/** for no block type message port */
+void rt_hw_hard_fault_message_push(void);
 
 #ifdef __cplusplus
 }

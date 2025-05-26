@@ -424,6 +424,7 @@ void rt_hw_hard_fault_exception(struct exception_info *exception_info)
     hard_fault_track();
 #endif /* RT_USING_FINSH */
 
+    rt_hw_hard_fault_message_push();
     while (1);
 }
 
