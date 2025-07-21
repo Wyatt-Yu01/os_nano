@@ -178,7 +178,53 @@ extern "C" {
 
 #define LOG_RAW(...)         dbg_raw(__VA_ARGS__)
 
-#define LOG_HEX(name, width, buf, size)
+#if DBG_LEVEL > DBG_INFO
+#define LOG_HEX(name, width, buf, size)                                 \
+    {                                                                   \
+        if ((size) > (width)) {                                         \
+            uint32_t row = 0;                                           \
+            row = (size) / (width);                                     \
+            for (uint32_t j = 0; j < row; j++) {                        \
+                rt_kprintf("\033[37m[" DBG_SECTION_NAME "/%s] HEX: ", name);\
+                for (uint32_t i = 0; i < (width); i++) {                \
+                    rt_kprintf("%02x ", buf[(width) * j + i]);          \
+                }                                                       \
+                rt_kprintf("\t");                                       \
+                for (uint32_t i = 0; i < (width); i++) {                \
+                    rt_kprintf("%c", buf[(width) * j + i]);             \
+                }                                                       \
+                _DBG_LOG_X_END;                                         \
+            }                                                           \
+            rt_kprintf("\033[37m[" DBG_SECTION_NAME "/%s] HEX: ", name);\
+            for (uint32_t i = row * (width); i < (size); i++) {         \
+                rt_kprintf("%02x ", buf[i]);                            \
+            }                                                           \
+            for (uint32_t i = (width) * (row + 1); i > (size); i--) {   \
+                rt_kprintf("   ");                                      \
+            }                                                           \
+            for (uint32_t i = row * (width); i < (size); i++) {         \
+                rt_kprintf("%c", buf[i]);                               \
+            }                                                           \
+            _DBG_LOG_X_END;                                             \
+        }                                                               \
+        else {                                                          \
+            rt_kprintf("\033[37m[" DBG_SECTION_NAME "/%s] HEX: ", name);\
+            for (uint32_t i = 0; i < (size); i++) {                     \
+                rt_kprintf("%02x ", buf[i]);                            \
+            }                                                           \
+            for (uint32_t i = 0; i < ((width) - (size)); i++) {         \
+                rt_kprintf("    ");                                     \
+            }                                                           \
+            rt_kprintf("\t");                                           \
+            for(uint32_t i = 0; i < (size); i++) {                      \
+                rt_kprintf("%c", buf[i]);                               \
+            }                                                           \
+            _DBG_LOG_X_END;                                             \
+        }                                                               \
+    }while(0)
+#else
+    #define LOG_HEX(name, width, buf, size)
+#endif
 
 #endif /* defined(RT_USING_ULOG) && define(DBG_ENABLE) */
 
