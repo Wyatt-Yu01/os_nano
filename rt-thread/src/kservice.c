@@ -640,18 +640,10 @@ RTM_EXPORT(rt_strdup);
  */
 void rt_show_version(void)
 {
-    rt_kprintf("\033[2J\033[0;0H"); //clear screen
-#if 0
-    rt_kprintf("__          ____     __     _______  _______ \n");
-    rt_kprintf("\\ \\        / /\\ \\   / / /\\ |__   __||__   __|\n");
-    rt_kprintf(" \\ \\  /\\  / /  \\ \\_/ / /  \\   | |      | |\n");
-    rt_kprintf("  \\ \\/  \\/ /    \\   / / /\\ \\  | |      | |\n");
-    rt_kprintf("   \\  /\\  /      | | / ____ \\ | |      | |\n");
-    rt_kprintf("    \\/  \\/       |_|/_/    \\_\\|_|      |_|\n");
-#else
+//    rt_kprintf("\033[2J\033[0;0H"); //clear screen
+
     rt_kprintf("|----------------------|\n");
     rt_kprintf("|-----   Wyatt    -----|\n");
-#endif
     rt_kprintf("| %s %s |\n", __DATE__, __TIME__);
     rt_kprintf("|----------------------|\n");
 }
