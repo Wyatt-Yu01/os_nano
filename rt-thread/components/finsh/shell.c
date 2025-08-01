@@ -446,6 +446,7 @@ static void shell_push_history(struct finsh_shell *shell)
 
 void finsh_thread_entry(void *parameter)
 {
+    (void)parameter;
     int ch;
 
     /* normal is echo mode */

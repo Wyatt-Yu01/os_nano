@@ -192,6 +192,7 @@ void rt_hw_secondary_cpu_idle_exec(void);
 
 #endif
 
+
 #ifdef __cplusplus
 }
 #endif

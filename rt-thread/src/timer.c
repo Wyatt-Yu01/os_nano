@@ -793,6 +793,7 @@ void rt_soft_timer_check(void)
  */
 static void _timer_thread_entry(void *parameter)
 {
+    (void)parameter;
     rt_tick_t next_timeout;
 
     while (1)
@@ -848,7 +849,7 @@ void rt_system_timer_init(void)
 void rt_system_timer_thread_init(void)
 {
 #ifdef RT_USING_TIMER_SOFT
-    int i;
+    unsigned int i;
 
     for (i = 0;
          i < sizeof(_soft_timer_list) / sizeof(_soft_timer_list[0]);
