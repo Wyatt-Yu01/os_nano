@@ -13,9 +13,10 @@ static volatile rt_thread_t tid;
 
 static void load_thread(void *param)
 {
+    (void)param;
     while (tid != RT_NULL && (int)tid->user_data)
     {
-        while ((int)tid->user_data >= rt_tick_get() % 100);
+        while ((unsigned int)tid->user_data >= rt_tick_get() % 100);
         rt_thread_delay(1);
     }
     tid = RT_NULL;

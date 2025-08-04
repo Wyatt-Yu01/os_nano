@@ -33,6 +33,8 @@ typedef int (*cmd_function_t)(int argc, char **argv);
 
 int msh_help(int argc, char **argv)
 {
+    (void)argc;
+    (void)argv;
     rt_kprintf("RT-Thread shell commands:\n");
     {
         struct finsh_syscall *index;
