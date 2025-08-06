@@ -642,7 +642,7 @@ void rt_show_version(void)
 {
 //    rt_kprintf("\033[2J\033[0;0H"); //clear screen
 
-    rt_kprintf("|----------------------|\n");
+    rt_kprintf("\n|----------------------|\n");
     rt_kprintf("|-----   Wyatt    -----|\n");
     rt_kprintf("| %s %s |\n", __DATE__, __TIME__);
     rt_kprintf("|----------------------|\n");
