@@ -1,0 +1,52 @@
+cmake_minimum_required(VERSION 3.20)
+
+add_library(rtthread INTERFACE)
+
+set(RTTHREAD_SRC "")
+set(RTTHREAD_INC_DIR "")
+
+list(APPEND RTTHREAD_INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/include")
+list(APPEND RTTHREAD_INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/components/finsh")
+list(APPEND RTTHREAD_INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/components/cpu_usage")
+
+file(GLOB rtthread_src "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/src/*.c")
+list(APPEND RTTHREAD_SRC ${rtthread_src})
+file(GLOB finsh_src "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/components/finsh/*.c")
+list(APPEND RTTHREAD_SRC ${finsh_src})
+file(GLOB cpu_usage_src "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/components/cpu_usage/*.c")
+list(APPEND RTTHREAD_SRC ${cpu_usage_src})
+file(GLOB libcpu_common_src "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/common/*.c")
+list(APPEND RTTHREAD_SRC ${libcpu_common_src})
+
+if(DEFINED CORE_CORTEX_M0 AND CORE_CORTEX_M0)
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m0/context_gcc.S")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m0/cpuport.c")
+elseif(DEFINED CORE_CORTEX_M3 AND CORE_CORTEX_M3)
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m3/context_gcc.S")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m3/cpuport.c")
+elseif(DEFINED CORE_CORTEX_M4 AND CORE_CORTEX_M4)
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m4/context_gcc.S")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m4/cpuport.c")
+elseif(DEFINED CORE_CORTEX_M7 AND CORE_CORTEX_M7)
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m7/context_gcc.S")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m7/cpuport.c")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m7/cpu_cache.c")
+elseif(DEFINED CORE_CORTEX_M23 AND CORE_CORTEX_M23)
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m23/context_gcc.S")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m23/cpuport.c")
+elseif(DEFINED CORE_CORTEX_M33 AND CORE_CORTEX_M33)
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m33/context_gcc.S")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m33/cpuport.c")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m33/syscall_gcc.c")
+    list(APPEND RTTHREAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/rt-thread/libcpu/arm/cortex-m33/trustzone.c")
+else()
+    message(FATAL_ERROR "未定义的 CORE 类型，请检查 CORE_CORTEX_M0/M3/M4/M7/M23/M33 是否正确定义")
+endif()
+
+target_include_directories(rtthread INTERFACE ${RTTHREAD_INC_DIR})
+target_sources(rtthread INTERFACE ${RTTHREAD_SRC})
+
+#[[
+set(RTTHREAD_SRC ${RTTHREAD_SRC} PARENT_SCOPE)
+set(RTTHREAD_INC_DIR ${RTTHREAD_INC_DIR} PARENT_SCOPE)
+]]
